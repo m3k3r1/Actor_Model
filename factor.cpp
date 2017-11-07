@@ -4,6 +4,7 @@
 
 using namespace caf;
 
+//Basic factorization
 behavior factorize(event_based_actor* me) {
   return {
     [=] (int n) {
@@ -19,7 +20,7 @@ behavior factorize(event_based_actor* me) {
 }
 
 // sends
-void findFactors(event_based_actor* me, const actor& other, int n){
+void find_Factors(event_based_actor* me, const actor& other, int n){
   me->request(other, std::chrono::seconds(10),n).then(
     [=](const std::vector<int> fct) {
       for(auto const& f: fct) {
@@ -38,7 +39,7 @@ int main(int argc, char const *argv[]) {
   auto factorize_actor = system.spawn(factorize);
 
   // create another actor that calls findFactors
-  system.spawn(findFactors, factorize_actor, 15);
+  system.spawn(find_Factors, factorize_actor, 15);
 
   return 0;
 }
